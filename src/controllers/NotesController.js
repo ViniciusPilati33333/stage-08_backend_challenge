@@ -19,10 +19,33 @@ class NotesController {
             }
         });
 
-        await knex("tags").insert(tagsInsert);
+        await knex("movie_tags").insert(tagsInsert);
 
         response.json(); 
     }
+
+    async show(request, response) {
+        const { id } = request.params;
+
+        const note = await knex("notes").where({ id }).first();
+        const tags = await knex("movie_tags").where({ note_id: id }).orderBy("name");
+
+
+        return response.json({
+            ...note,
+            tags
+            
+        }); 
+
+     }
+
+     async delete(request, response) {
+        const { id } = request.params;
+
+        await knex("notes").where({ id }).onDelete();
+
+        return response.json();
+     }
 }
 
 module.exports = NotesController;

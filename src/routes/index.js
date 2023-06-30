@@ -8,7 +8,7 @@ const notesRouter = require("./notes.routes");
 const routes = Router();
 
 routes.use("/users", usersRouter);
-routes.use("/users", notesRouter);
+routes.use("/notes", notesRouter);
 
 
 module.exports = routes;
